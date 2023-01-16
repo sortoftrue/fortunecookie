@@ -34,12 +34,14 @@ public final class App {
         }
         System.out.printf("There are %d fortunes\n",noFortunes);
 
-        String input="";
+        
 
         while(true){
+            String input="";
             System.out.println("Wait conn");
             Socket socket = server.accept();
             
+
             while(!input.equals("exit")){
                 System.out.println(input);
                 System.out.println("Wait for input");
@@ -75,10 +77,8 @@ public final class App {
                     }
                 }
 
-                if (input.equals("exit")) break;
             }
 
-            input = "";
         }
         
 
