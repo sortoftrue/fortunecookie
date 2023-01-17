@@ -1,14 +1,12 @@
 package com.james;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class AppMulti {
     
@@ -32,9 +30,12 @@ public final class AppMulti {
             System.out.println(fortune);
             noFortunes++;
         }
+
+
+
         System.out.printf("There are %d fortunes\n",noFortunes);
 
-        String input="";
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
 
         while(true){
             System.out.println("Wait conn");
@@ -42,10 +43,16 @@ public final class AppMulti {
             
             ClientHandler clientSock = new ClientHandler(socket, noFortunes, file);
 
-            new Thread(clientSock).start();
+            //Thread thread1 = new Thread(clientSock);
+            //thread1.start();
+
+            //threadPool.submit(clientSock);
+
+            ExecutorService executorServ = Executors.newFixedThreadPool(1);
+            executorServ.execute(clientSock);
+            executorServ.shutdown();
         }
         
-
 
     }
 }

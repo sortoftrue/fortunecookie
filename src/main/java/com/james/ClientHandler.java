@@ -1,5 +1,6 @@
 package com.james;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -27,10 +28,11 @@ public class ClientHandler implements Runnable{
 
         try{
             while(!input.equals("exit")){
-                System.out.println(input);
+                //System.out.println(input);
+                System.out.println(Thread.currentThread().getName());
                 System.out.println("Wait for input");
                 
-                DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+                DataInputStream in = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
                 input = in.readUTF();
     
                 switch (input){
@@ -47,7 +49,7 @@ public class ClientHandler implements Runnable{
                         }
     
                         DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream());
-                        output.writeUTF(outputFortune);
+                        output.writeUTF(outputFortune + Thread.currentThread().getName());
                         break;
                     }
                     case "exit":{
