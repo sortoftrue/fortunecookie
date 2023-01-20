@@ -49,7 +49,7 @@ public class ClientHandler implements Runnable{
                         }
     
                         DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream());
-                        output.writeUTF(outputFortune + Thread.currentThread().getName());
+                        output.writeUTF(outputFortune + " @ " + Thread.currentThread().getName());
                         break;
                     }
                     case "exit":{
